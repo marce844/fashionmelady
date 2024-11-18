@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <link rel="icon" href="/images/FASHION SHOP MELADY.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<style>
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #eae6f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+#wrapper {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+    animation: fadeIn 1s ease-out;
+}
+
+form h2 {
+    text-align: center;
+    color: fuchsia;
+    font-size: 26px;
+    margin-bottom: 15px;
+    animation: slideDown 0.8s ease;
+}
+
+form label {
+    display: block;
+    font-size: 14px;
+    color: black;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"], /* Añadido para el campo de teléfono */
+form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #b29dd0;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #f4f0fa;
+    transition: border 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="tel"]:focus, /* Añadido para el campo de teléfono */
+form textarea:focus {
+    border-color: #805acb;
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 0 6px rgba(128, 90, 203, 0.5);
+}
+
+form textarea {
+    resize: vertical;
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #805acb;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+    background-color: #5a409b;
+    transform: translateY(-3px);
+}
+
+form button:active {
+    transform: translateY(0px);
+}
+
+.message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: purple;
+    display: none; /* Inicialmente oculto */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-15px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+</style>
+<body>
+    <div id="wrapper">
+        <form id="contactForm" action="https://formsubmit.co/fashionshopmelady@gmail.com" method="POST" onsubmit="handleFormSubmit(event)">
+            <h2>¿Dinos que te gustaria comprar?</h2>
+            
+            <label for="name"><i class="fas fa-user"></i> Nombre</label>
+            <input type="text" id="name" name="nombre" placeholder="Tu nombre" required>
+
+            <label for="telefono"><i class="fas fa-phone"></i> Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Tu número de teléfono" required>
+
+
+            <label for="subject"><i class="fas fa-tag"></i> Asunto</label>
+            <input type="text" id="subject" name="asunto" placeholder="Asunto" required>
+
+            <label for="comments"><i class="fas fa-comments"></i> Comentarios</label>
+            <textarea id="comments" name="comentarios" rows="5" placeholder="Escribe tu mensaje aquí" required></textarea>
+
+            <input type="hidden" name="_captcha" value="false">
+
+            <button type="submit">Enviar</button>
+        </form>
+        
+        <div class="message" id="successMessage">¡Mensaje enviado con éxito!</div>
+        
+        <button onclick="window.open('https://www.google.com/maps?q=Obsequios%20de%20Amor%2C%20Honduras')">Ver ubicación en el mapa</button>
+    </div>
+
+    <script>
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Evita el envío estándar del formulario
+            const form = document.getElementById('contactForm');
+            const submitButton = form.querySelector('button[type="submit"]');
+            const successMessage = document.getElementById('successMessage');
+    
+            // Deshabilitar el botón de enviar y mostrar mensaje de éxito temporalmente
+            submitButton.disabled = true;
+            successMessage.style.display = "block";
+    
+            // Enviar el formulario con FormSubmit
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form)
+            }).then(response => {
+                if (response.ok) {
+                    form.reset(); // Limpia los campos del formulario
+                } else {
+                    alert("Error al enviar el mensaje.");
+                    successMessage.style.display = "none"; // Oculta el mensaje si hay error
+                }
+            }).catch(error => {
+                alert("Ocurrió un error. Inténtalo de nuevo.");
+                successMessage.style.display = "none"; // Oculta el mensaje si hay error
+            }).finally(() => {
+                // Habilitar el botón de enviar nuevamente
+                submitButton.disabled = false;
+                // Ocultar el mensaje después de 3 segundos
+                setTimeout(() => {
+                    successMessage.style.display = "none";
+                }, 3000);
+            });
+        }
+    </script>
+    
+</body>
+</html>
+
+
